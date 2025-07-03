@@ -41,7 +41,8 @@ class ModelTester:
         return model
 
     def set_model_eval(self, model):
-        model.eval()
+        if hasattr(model, "eval"):
+            return model.eval()
         return model
 
     def set_inputs_train(self, inputs):
@@ -66,12 +67,12 @@ class ModelTester:
         return model
 
     def run_model(self, model, inputs):
-        if isinstance(inputs, Mapping):
-            return model(**inputs)
-        elif isinstance(inputs, Sequence):
+        # Special handling for HuggingFace pipelines
+        if hasattr(model, "__class__") and "pipeline" in model.__class__.__name__.lower():
+            return model(prompt=inputs)
+        if isinstance(inputs, (list, tuple)):
             return model(*inputs)
-        else:
-            return model(inputs)
+        return model(inputs)
 
     def append_fake_loss_function(self, outputs):
         # Using `torch.mean` as the loss function for testing purposes.

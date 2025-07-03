@@ -4,7 +4,7 @@
 import datetime
 
 import pytest
-import ttnn
+import torch_ttnn as ttnn
 import torch
 import torch_ttnn
 import collections

@@ -13,9 +13,12 @@ _torch._dynamo.backends.registry.register_backend(name="ttnn", compiler_fn=backe
 from .passes.lowering import target_wrappers
 
 try:
-    import ttnn
+    import torch_ttnn as ttnn
 except ImportError as e:
     print(
         "ttnn is not installed. Run `python3 -m pip install -r requirements.txt` or `python3 -m pip install -r requirements-dev.txt` if you are developing the compiler"
     )
     raise e
+
+from . import device
+from .device import DispatchCoreType, DispatchCoreAxis, DispatchCoreConfig, open_device, open_mesh_device, close_device, close_mesh_device, synchronize_device, SetDefaultDevice
