@@ -10,7 +10,7 @@ from torch_ttnn.passes.analysis.input_analysis_pass import PrimalTag
 import math
 import logging
 
-import ttnn
+import torch_ttnn as ttnn
 
 
 class MultiDevicePass(PassBase):

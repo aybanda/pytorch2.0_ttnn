@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 import torch
-import ttnn
+import torch_ttnn as ttnn
 import math
 from torch._guards import detect_fake_mode
 from torch._subclasses.fake_tensor import unset_fake_temporarily

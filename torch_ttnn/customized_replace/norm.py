@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 import torch
-import ttnn
+import torch_ttnn as ttnn
 
 
 def is_getitem(n: torch.fx.node.Node):

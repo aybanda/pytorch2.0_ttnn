@@ -6,7 +6,7 @@ import torch
 import torch._dynamo
 from typing import List, Optional, Union, Mapping, Any
 from functorch.compile import make_boxed_func
-import ttnn
+import torch_ttnn as ttnn
 import pickle
 from pathlib import Path
 import os

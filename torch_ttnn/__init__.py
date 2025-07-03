@@ -36,7 +36,7 @@ def _check_ttnn_requirements():
 
 try:
     _check_ttnn_requirements()
-    import ttnn
+    import torch_ttnn as ttnn
 except ImportError as e:
     if "ttnn" not in str(e):
         raise

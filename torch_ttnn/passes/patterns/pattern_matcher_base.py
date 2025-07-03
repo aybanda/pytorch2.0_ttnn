@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: © 2025 Tenstorrent AI ULC
 #
 # SPDX-License-Identifier: Apache-2.0
-import ttnn
+import torch_ttnn as ttnn
 import torch
 import torch._dynamo
 from typing import Optional, Tuple, List

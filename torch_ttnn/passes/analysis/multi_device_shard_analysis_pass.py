@@ -5,7 +5,7 @@ import torch
 from torch.fx.passes.infra.pass_base import PassBase, PassResult
 from torch_ttnn.passes.analysis.input_analysis_pass import PrimalTag
 
-import ttnn
+import torch_ttnn as ttnn
 
 
 def propagate_sharding_to_users(node, shard_dim, concat_size, seen_set):

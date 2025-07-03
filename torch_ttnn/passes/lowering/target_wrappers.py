@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 from dataclasses import dataclass
 from operator import getitem
-import ttnn
+import torch_ttnn as ttnn
 import torch
 import pickle
 

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import torch
-import ttnn
+import torch_ttnn as ttnn
 from torch.fx import Node
 from torch_ttnn.passes.patterns.pattern_matcher_base import PatternMatcherBase
 from typing import List, Tuple
@@ -31,7 +31,7 @@ class SoftMaxPatterns(PatternMatcherBase):
 
         # Find all multiply nodes with something similar to a scale
         # (int, float bigger than 0)
-        multiply_nodes = self._find_nodes_of_type(ttnn.multiply)
+        multiply_nodes = self._find_nodes_of_type(ttn.multiply)
         for multiply in multiply_nodes:
             # Check for the scale factor (1/sqrt(head_size))
             # this number should be always be positive
@@ -44,7 +44,7 @@ class SoftMaxPatterns(PatternMatcherBase):
                 continue
 
             # Find add operation that combines with attention mask
-            add = self._find_exclusive_user_of_type(multiply, ttnn.add)
+            add = self._find_exclusive_user_of_type(multiply, ttn.add)
             if not add:
                 continue
 
@@ -53,7 +53,7 @@ class SoftMaxPatterns(PatternMatcherBase):
                 continue
 
             # Find softmax operation with numeric stability
-            softmax = self._find_exclusive_user_of_type(add, ttnn.softmax)
+            softmax = self._find_exclusive_user_of_type(add, ttn.softmax)
             if not softmax:
                 continue
 
@@ -72,7 +72,7 @@ class SoftMaxPatterns(PatternMatcherBase):
                 head_size = None if scale is None else (int(1 / (scale * scale)) if scale < 1 else int(scale))
                 attention_mask = add.args[1]
                 fused_node = self.gm.graph.call_function(
-                    ttnn.transformer.attention_softmax,
+                    ttn.transformer.attention_softmax,
                     args=(input_tensor,),
                     kwargs={"head_size": head_size, "attention_mask": attention_mask},
                 )
