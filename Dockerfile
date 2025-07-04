@@ -32,4 +32,6 @@ RUN rm /tmp/requirements-dev.txt /tmp/requirements.txt
 COPY . /app
 WORKDIR /app
 
+RUN pip install -e .
+
 CMD ["pytest", "tests/models/stable_diffusion/test_stable_diffusion_v2.py", "--tb=short", "-v"]
