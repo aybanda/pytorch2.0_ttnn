@@ -11,7 +11,7 @@ import pickle
 from pathlib import Path
 import os
 from torch_ttnn.handle_input_aliasing import insert_clones_for_input_aliasing
-import tools.export_code as export_code
+from . import export_code
 import torch_ttnn.metrics as metrics
 from torch_ttnn import mem_utils
 from torch_ttnn.utils import GraphCleanup
@@ -279,7 +279,7 @@ def ttnn_backend(
     options: TorchTtnnOption = None,
 ) -> torch.fx.GraphModule:
     if options.export_code:
-        import tools.export_code as export_code
+        from . import export_code
 
         # Some models have multiple forward functions with separate inputs for each.
         # Within these forward functions, there can be graph breakages which are
