@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import torch
-import ttnn
+import torch_ttnn as ttnn
 from torch.fx import Node
 from torch_ttnn.passes.patterns.pattern_matcher_base import PatternMatcherBase
 from typing import List, Tuple

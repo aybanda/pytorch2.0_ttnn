@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 import graphviz
 import torch
-import ttnn
+import torch_ttnn as ttnn
 import os
 import math
 from collections import defaultdict

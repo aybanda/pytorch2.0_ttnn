@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 import torch
-import ttnn
+import torch_ttnn as ttnn
 from torch.fx.passes.infra.pass_base import PassBase, PassResult
 from torch.fx.node import Node, map_arg
 from .lowering import target_wrappers

@@ -4,7 +4,7 @@
 import inspect
 import pickle
 import torch
-import ttnn
+import torch_ttnn as ttnn
 from torch_ttnn.passes.analysis.graph_module_analysis_pass import ModelType
 from torch_ttnn.passes.analysis.input_analysis_pass import PrimalTag
 from torch_ttnn.utils import GraphCleanup, TtnnDevice, TtnnBfloat16, TtnnUint32, TtnnTileLayout, get_dtype
