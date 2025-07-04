@@ -343,7 +343,7 @@ def native_layer_norm(
     in_tensor_shape: torch.Size,
     mean_rstd_shape: torch.Size,
     ttnn_mean_rstd_shape: torch.Size,
-    ttnn_dtype: ttnn.DataType,
+    ttnn_dtype: torch.dtype,
     norm_dims: int,
     gamma: torch.Tensor,
     beta: torch.Tensor,
