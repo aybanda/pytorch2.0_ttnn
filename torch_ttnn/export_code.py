@@ -12,8 +12,7 @@ import types
 
 from collections import defaultdict
 from pathlib import Path
-from torch_ttnn.dispatch_helpers import get_dispatch_core_type, get_dispatch_core_axis, get_dispatch_core_config
-from tests.utils import assert_with_pcc, comp_pcc, construct_pcc_assert_message
+from torch_ttnn.utils import assert_with_pcc, comp_pcc, construct_pcc_assert_message, get_dispatch_core_type, get_dispatch_core_axis, get_dispatch_core_config
 from torch.fx.node import Node, map_arg
 from torch_ttnn.utils import get_opname, users_have_getitem, is_operation
 from typing import Dict, List
@@ -291,7 +290,7 @@ def _build_code_from_aten_ttnn_graphs(aten_graph, ttnn_graph, output_nodes, torc
     Args:
         aten_graph (torch.fx.graph.Graph): Unmodified aten graph
         ttnn_graph (torch.fx.graph.Graph): Modified ttnn graph.
-        output_nodes (List[tuple(torch.fx.Node])):
+        output_nodes (List[tuple(torch.fx.Node)]):
             List of output tuple of nodes used to track graph breakage.
             The final code will be one fused function.
         torch_ttnn_option (TorchTtnnOption): options containing various useful attributes

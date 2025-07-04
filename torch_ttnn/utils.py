@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 import torch
 import re
+import numpy as np
 
 
 def GraphCleanup(gm: torch.fx.GraphModule) -> torch.fx.GraphModule:
@@ -233,3 +234,87 @@ def get_emplace_custom_object_in_graph(object_type, *args, **kwargs):
     key = build_repr()
 
     return get_add_custom_object_in_graph(key, object_type(*args, **kwargs))
+
+
+def comp_pcc(golden, calculated, pcc=0.99):
+    golden = torch.Tensor(golden)
+    calculated = torch.Tensor(calculated)
+
+    if golden.dtype != calculated.dtype:
+        calculated = calculated.type(golden.dtype)
+
+    if torch.all(torch.isnan(golden)) and torch.all(torch.isnan(calculated)):
+        return True, 1.0
+
+    if torch.all(torch.isnan(golden)) or torch.all(torch.isnan(calculated)):
+        return False, 0.0
+
+    if torch.any(golden.bool()) != torch.any(calculated.bool()):
+        return False, 0.0
+
+    golden = golden.clone()
+    golden[
+        torch.logical_or(
+            torch.isnan(golden),
+            torch.logical_or(torch.isinf(golden), torch.isneginf(golden)),
+        )
+    ] = 0
+    calculated = calculated.clone()
+    calculated[
+        torch.logical_or(
+            torch.isnan(calculated),
+            torch.logical_or(torch.isinf(calculated), torch.isneginf(calculated)),
+        )
+    ] = 0
+
+    if torch.equal(golden, calculated):
+        return True, 1.0
+
+    if golden.dtype == torch.bfloat16:
+        golden = golden.type(torch.float32)
+        calculated = calculated.type(torch.float32)
+    cal_pcc = np.min(
+        np.ma.corrcoef(
+            np.ma.masked_invalid(torch.squeeze(golden).detach().numpy()).flatten(),
+            np.ma.masked_invalid(torch.squeeze(calculated).detach().numpy()).flatten(),
+        )
+    )
+
+    if isinstance(cal_pcc, np.ma.core.MaskedConstant):
+        return True, 1.0
+
+    return cal_pcc >= pcc, cal_pcc
+
+
+def construct_pcc_assert_message(message, expected_pytorch_result, actual_pytorch_result):
+    messages = []
+    messages.append(message)
+    messages = [str(m) for m in messages]
+    return "\n".join(messages)
+
+
+def assert_with_pcc(expected_pytorch_result, actual_pytorch_result, pcc=0.999):
+    assert list(expected_pytorch_result.shape) == list(
+        actual_pytorch_result.shape
+    ), f"list(expected_pytorch_result.shape)={list(expected_pytorch_result.shape)} vs list(actual_pytorch_result.shape)={list(actual_pytorch_result.shape)}"
+    pcc_passed, pcc_message = comp_pcc(expected_pytorch_result, actual_pytorch_result, pcc)
+    assert pcc_passed, construct_pcc_assert_message(pcc_message, expected_pytorch_result, actual_pytorch_result)
+    return pcc_passed, pcc_message
+
+
+def get_dispatch_core_type():
+    import torch_ttnn as ttnn
+    return ttnn.device.DispatchCoreType.ETH
+
+
+def get_dispatch_core_axis():
+    import torch_ttnn as ttnn
+    return ttnn.DispatchCoreAxis.ROW
+
+
+def get_dispatch_core_config():
+    dispatch_core_type = get_dispatch_core_type()
+    dispatch_core_axis = get_dispatch_core_axis()
+    import torch_ttnn as ttnn
+    dispatch_core_config = ttnn.DispatchCoreConfig(dispatch_core_type, dispatch_core_axis)
+    return dispatch_core_config
