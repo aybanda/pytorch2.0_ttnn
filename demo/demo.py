@@ -8,6 +8,7 @@ from codegen import *
 from gpt2 import *
 from resnet18 import *
 from mnist import *
+import subprocess
 
 MAX_GENERATION_LENGTH = 512
 
@@ -388,5 +389,16 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response_with_metrics})
 
 
+def run_sd14_test():
+    print("Running Stable Diffusion 1.4 test...")
+    result = subprocess.run(
+        ["pytest", "tests/models/stable_diffusion/test_stable_diffusion_v2.py"],
+        capture_output=True, text=True
+    )
+    print(result.stdout)
+    print(result.stderr, file=sys.stderr)
+
+
 if __name__ == "__main__":
+    run_sd14_test()
     main()
