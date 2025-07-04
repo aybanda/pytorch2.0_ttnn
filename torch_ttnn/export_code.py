@@ -12,7 +12,7 @@ import types
 
 from collections import defaultdict
 from pathlib import Path
-from tests.conftest import get_dispatch_core_type, get_dispatch_core_axis, get_dispatch_core_config
+from torch_ttnn.dispatch_helpers import get_dispatch_core_type, get_dispatch_core_axis, get_dispatch_core_config
 from tests.utils import assert_with_pcc, comp_pcc, construct_pcc_assert_message
 from torch.fx.node import Node, map_arg
 from torch_ttnn.utils import get_opname, users_have_getitem, is_operation
