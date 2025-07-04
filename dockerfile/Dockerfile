@@ -28,3 +28,5 @@ RUN python3 -m pip install --no-cache-dir -r /tmp/requirements-dev.txt && \
 
 # Clean up the temporary requirements files
 RUN rm /tmp/requirements-dev.txt /tmp/requirements.txt
+
+CMD ["pytest", "tests/models/stable_diffusion/test_stable_diffusion_v2.py", "--tb=short", "-v"]
