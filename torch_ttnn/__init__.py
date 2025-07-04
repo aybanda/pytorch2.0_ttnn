@@ -22,3 +22,5 @@ except ImportError as e:
 
 from . import device
 from .device import DispatchCoreType, DispatchCoreAxis, DispatchCoreConfig, open_device, open_mesh_device, close_device, close_mesh_device, synchronize_device, SetDefaultDevice
+
+from .utils import TtnnDevice as Device, TtnnRowMajorLayout as ROW_MAJOR_LAYOUT, TtnnTileLayout as TILE_LAYOUT, TtnnUint32 as uint32, TtnnInt32 as int32, TtnnBfloat16 as bfloat16, TtnnDramMemoryConfig as DRAM_MEMORY_CONFIG, TtnnL1MemoryConfig as L1_MEMORY_CONFIG

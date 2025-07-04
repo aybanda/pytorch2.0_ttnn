@@ -6,7 +6,7 @@ import logging
 import lzma
 import pickle
 import torch.utils._pytree as pytree
-import ttnn
+import torch_ttnn as ttnn
 import torch
 import types
 
@@ -465,7 +465,7 @@ def _save_to_disk(model_name, forward_codes, call_forwards_in_main, all_inputs, 
         "import numpy as np",
         "import pickle",
         "import torch",
-        "import ttnn",
+        "import torch_ttnn as ttnn",
         "from pathlib import Path",
         "from typing import Dict",
     ]
