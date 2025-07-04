@@ -127,10 +127,10 @@ def run_once(*args):
         returned_addresses = [
             r.buffer_address()
             for r in return_results
-            if isinstance(r, ttnn.Tensor) and r.storage_type() == ttnn.StorageType.DEVICE
+            if isinstance(r, torch.Tensor) and r.storage_type() == ttnn.StorageType.DEVICE
         ]
         # only deallocate ttnn tensors
-        to_deallocate = [temp_results[idx] for idx in to_deallocate if isinstance(temp_results[idx], ttnn.Tensor)]
+        to_deallocate = [temp_results[idx] for idx in to_deallocate if isinstance(temp_results[idx], torch.Tensor)]
         # only deallocate device tensors that do not alias a returned tensor
         to_deallocate = filter(
             lambda tens: tens.storage_type == ttnn.StorageType.DEVICE
@@ -339,15 +339,15 @@ def concat_tensor(tensor, dim, num_devices):
 # TODO: Support compute kernel config
 @torch.fx.wrap
 def native_layer_norm(
-    input_tensor: ttnn.Tensor,
+    input_tensor: torch.Tensor,
     in_tensor_shape: torch.Size,
     mean_rstd_shape: torch.Size,
     ttnn_mean_rstd_shape: torch.Size,
     ttnn_dtype: ttnn.DataType,
     norm_dims: int,
-    gamma: ttnn.Tensor,
-    beta: ttnn.Tensor,
-    epsilon: ttnn.Tensor,
+    gamma: torch.Tensor,
+    beta: torch.Tensor,
+    epsilon: torch.Tensor,
     use_mean: bool,
     use_rstd: bool,
     device: ttnn.Device,

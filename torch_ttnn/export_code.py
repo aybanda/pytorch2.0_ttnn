@@ -514,7 +514,7 @@ def _save_to_disk(model_name, forward_codes, call_forwards_in_main, all_inputs, 
 def check_accuracy(expected, actual):
     if expected is None and actual is None:
         return
-    if isinstance(actual, ttnn.Tensor):
+    if isinstance(actual, torch.Tensor):
         actual = ttnn.to_torch(actual)
     assert_with_pcc(expected, actual, pcc = 0.90)
 

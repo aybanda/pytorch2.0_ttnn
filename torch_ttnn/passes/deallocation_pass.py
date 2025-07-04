@@ -13,7 +13,7 @@ from typing import Dict, List
 
 @torch.fx.wrap
 def deallocate(tensor):
-    if isinstance(tensor, ttnn.Tensor):
+    if isinstance(tensor, torch.Tensor):
         tensor.deallocate()
     return None
 
