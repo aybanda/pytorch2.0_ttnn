@@ -350,7 +350,7 @@ def native_layer_norm(
     epsilon: torch.Tensor,
     use_mean: bool,
     use_rstd: bool,
-    device: ttnn.Device,
+    device: "ttnn.Device",
 ):
     if not use_mean and not use_rstd:
         output = ttnn.layer_norm(input_tensor, epsilon=epsilon, weight=gamma, bias=beta)
