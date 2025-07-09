@@ -64,3 +64,36 @@ def test_stable_diffusion_1_4(record_property, mode):
         noise_pred = results.sample
 
     record_property("torch_ttnn", (tester, results)) 
+
+
+@pytest.mark.parametrize("mode", ["eval"])
+@pytest.mark.compilation_xfail
+def test_stable_diffusion_1_4_performance(record_property, mode):
+    model_name = "Stable Diffusion 1.4"
+    record_property("model_name", model_name)
+    record_property("mode", mode)
+
+    tester = ThisTester(model_name, mode)
+    try:
+        import psutil
+        process = psutil.Process()
+        mem_before = process.memory_info().rss / 1024 / 1024  # in MB
+    except ImportError:
+        mem_before = None
+    import time
+    start = time.time()
+    results = tester.test_model()
+    end = time.time()
+    if mode == "eval":
+        noise_pred = results.sample
+    try:
+        mem_after = process.memory_info().rss / 1024 / 1024  # in MB
+    except Exception:
+        mem_after = None
+    elapsed = end - start
+    fps = 1.0 / elapsed if elapsed > 0 else 0.0
+    record_property("inference_time_sec", elapsed)
+    record_property("fps", fps)
+    if mem_before is not None and mem_after is not None:
+        record_property("memory_usage_mb", mem_after - mem_before)
+    record_property("torch_ttnn", (tester, results)) 
