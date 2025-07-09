@@ -18,3 +18,11 @@ requires-python = ">=3.8"
 dynamic = ["dependencies", "version"]
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
+
+[tool.pytest.ini_options]
+markers = [
+    "skip_platform(platform): skip test on specified platform",
+    "converted_end_to_end: test is a converted end-to-end test",
+    "e2e_with_native_integration: test with native integration",
+    "compilation_xfail: expected to fail at compilation",
+]
