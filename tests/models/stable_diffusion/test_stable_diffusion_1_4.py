@@ -1,5 +1,12 @@
 print("Stable Diffusion 1.4 test is running!")
 print("Loading test file...")
+
+def test_simple():
+    """Simple test to verify pytest is working"""
+    print("Simple test is running!")
+    assert True
+    print("Simple test passed!")
+
 # SPDX-FileCopyrightText: © 2025 Tenstorrent AI ULC
 #
 # SPDX-License-Identifier: Apache-2.0
