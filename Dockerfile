@@ -34,4 +34,4 @@ WORKDIR /app
 
 RUN pip install -e .
 
-CMD ["sh", "-c", "echo 'Container starting...' && python -c 'print(\"Python is working\")' && pytest tests/models/stable_diffusion/test_stable_diffusion_1_4.py::test_simple -v -s && echo 'Simple test completed, now running full test...' && pytest tests/models/stable_diffusion/test_stable_diffusion_1_4.py --tb=short -v -rx -s"]
+CMD ["echo", "CONTAINER IS RUNNING - CMD EXECUTED SUCCESSFULLY"]
