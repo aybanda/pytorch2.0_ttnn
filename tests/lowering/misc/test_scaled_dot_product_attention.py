@@ -3,7 +3,7 @@ import torch
 import torch_ttnn
 import ttnn
 
-from tests.utils import assert_with_pcc
+from torch_ttnn.testing_utils import assert_with_pcc
 
 
 class ScaledDotProductAttentionModule(torch.nn.Module):

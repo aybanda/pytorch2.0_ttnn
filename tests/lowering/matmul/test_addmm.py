@@ -6,7 +6,7 @@ import torch_ttnn
 import pytest
 import ttnn
 
-from tests.utils import assert_with_pcc
+from torch_ttnn.testing_utils import assert_with_pcc
 
 
 class AddMmModule(torch.nn.Module):

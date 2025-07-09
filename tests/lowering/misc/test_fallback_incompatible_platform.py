@@ -41,6 +41,6 @@ def test_floor(device, input_shape):
         assert target.count(torch.ops.aten.floor.default) == 0
 
     # Check inference result
-    from tests.utils import assert_with_pcc
+    from torch_ttnn.testing_utils import assert_with_pcc
 
     assert_with_pcc(result_before, result_after)

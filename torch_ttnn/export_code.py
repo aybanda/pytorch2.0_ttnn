@@ -6,17 +6,20 @@ import logging
 import lzma
 import pickle
 import torch.utils._pytree as pytree
-import ttnn
+try:
+    import ttnn
+except ImportError:
+    ttnn = None
 import torch
 import types
 
 from collections import defaultdict
 from pathlib import Path
-from tests.conftest import get_dispatch_core_type, get_dispatch_core_axis, get_dispatch_core_config
-from tests.utils import assert_with_pcc, comp_pcc, construct_pcc_assert_message
+from torch_ttnn.dispatch_utils import get_dispatch_core_type, get_dispatch_core_axis, get_dispatch_core_config
 from torch.fx.node import Node, map_arg
 from torch_ttnn.utils import get_opname, users_have_getitem, is_operation
 from typing import Dict, List
+from torch_ttnn.testing_utils import assert_with_pcc, comp_pcc, construct_pcc_assert_message
 
 wrapper_funcs = set()
 rename_wrappers = set()

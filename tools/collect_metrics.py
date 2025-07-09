@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 from collections import Counter, defaultdict
 import glob
-from tests.utils import comp_pcc
+from torch_ttnn.testing_utils import comp_pcc
 from tools.data_collection import pydantic_models
 from enum import Enum
 import string
