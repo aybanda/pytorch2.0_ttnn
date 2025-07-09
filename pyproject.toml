@@ -26,3 +26,4 @@ markers = [
     "e2e_with_native_integration: test with native integration",
     "compilation_xfail: expected to fail at compilation",
 ]
+norecursedirs = ["external"]
