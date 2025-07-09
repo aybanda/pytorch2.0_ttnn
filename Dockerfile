@@ -34,4 +34,4 @@ WORKDIR /app
 
 RUN pip install -e .
 
-CMD ["pytest", "tests/models/stable_diffusion/test_stable_diffusion_v2.py", "--tb=short", "-v"]
+CMD ["pytest", "tests/models/stable_diffusion/test_stable_diffusion_1_4.py", "--tb=short", "-v"]
