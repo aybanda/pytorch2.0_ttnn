@@ -1,7 +1,7 @@
 import pytest
 import torch
 import torch_ttnn
-import ttnn
+import torch_ttnn as ttnn
 
 from tests.utils import assert_with_pcc
 

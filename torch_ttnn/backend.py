@@ -7,6 +7,7 @@ import torch._dynamo
 from typing import List, Optional, Union, Mapping, Any
 from functorch.compile import make_boxed_func
 import torch_ttnn as ttnn
+from torch_ttnn.utils import TtnnDevice as Device
 import pickle
 from pathlib import Path
 import os
@@ -27,7 +28,7 @@ torch._dynamo.config.verbose = True
 class TorchTtnnOption:
     def __init__(
         self,
-        device: ttnn.Device,
+        device: Device,
         gen_graphviz=False,
         run_mem_analysis=False,
         run_eviction_opt=False,

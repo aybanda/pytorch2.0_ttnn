@@ -4,7 +4,7 @@
 import torch
 import torch_ttnn
 import pytest
-import ttnn
+import torch_ttnn as ttnn
 
 
 # Found this bug on beit is aten.mean result shape is [1, 1000] but ttnn.mean result become [1, 1, 1000]

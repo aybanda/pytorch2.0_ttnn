@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 import torch
 import torch_ttnn
-import ttnn
+import torch_ttnn as ttnn
 
 
 class PatternModule(torch.nn.Module):

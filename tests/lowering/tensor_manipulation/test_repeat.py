@@ -4,7 +4,7 @@
 import numpy as np
 import pytest
 import torch
-import ttnn
+import torch_ttnn as ttnn
 import torch_ttnn
 
 

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 import torch
-import torch_ttnn as ttnn
+import ttnn
 from torch.fx.passes.infra.pass_base import PassBase, PassResult
 from torch.fx.node import Node, map_arg
 from .lowering import target_wrappers
@@ -13,7 +13,7 @@ from typing import Dict, List
 
 @torch.fx.wrap
 def deallocate(tensor):
-    if isinstance(tensor, torch.Tensor):
+    if isinstance(tensor, ttnn.Tensor):
         tensor.deallocate()
     return None
 

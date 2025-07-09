@@ -4,7 +4,7 @@
 import pytest
 import torch
 import torch_ttnn
-import ttnn
+import torch_ttnn as ttnn
 
 
 class ConstantPadNdModule(torch.nn.Module):

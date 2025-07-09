@@ -4,7 +4,7 @@
 import torch
 import torch_ttnn
 import pytest
-import ttnn
+import torch_ttnn as ttnn
 
 END_MAX = 9223372036854775807
 

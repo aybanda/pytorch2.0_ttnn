@@ -1,5 +1,5 @@
 import torch
-import ttnn
+import torch_ttnn as ttnn
 from torch_ttnn.cpp_extension import ttnn_module
 import pytest
 

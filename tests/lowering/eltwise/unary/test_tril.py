@@ -4,7 +4,7 @@
 import torch
 import torch_ttnn
 import pytest
-import ttnn
+import torch_ttnn as ttnn
 
 
 class TrilModule(torch.nn.Module):

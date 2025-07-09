@@ -81,119 +81,134 @@ def get_pointwise_unary_ops():
         ttnn.bitwise_not,
     ]
 
+def get_pointwise_binary_ops():
+    import torch_ttnn as ttnn
+    return [
+        ttnn.add,
+        ttnn.atan2,
+        ttnn.div,
+        ttnn.eqz,
+        ttnn.floor_div,
+        ttnn.gez,
+        ttnn.ge,
+        ttnn.gtz,
+        ttnn.isclose,
+        ttnn.ldexp,
+        ttnn.lez,
+        ttnn.logaddexp,
+        ttnn.logaddexp2,
+        ttnn.le,
+        ttnn.ltz,
+        ttnn.nextafter,
+        ttnn.nez,
+        ttnn.polyval,
+        ttnn.squared_difference,
+        ttnn.eq,
+        ttnn.gt,
+        ttnn.logical_and,
+        ttnn.logical_or,
+        ttnn.logical_xor,
+        ttnn.lt,
+        ttnn.maximum,
+        ttnn.minimum,
+        ttnn.mul,
+        ttnn.ne,
+        ttnn.pow,
+        ttnn.rsub,
+        ttnn.sub,
+        ttnn.xlogy,
+        # ttnn.add_and_apply_activation,  # ttnn has no add_and_apply_activation, remove the comment in the future when it has
+        # ttnn.add_and_apply_activation_,  # ttnn has no add_and_apply_activation, remove the comment in the future when it has
+    ]
 
-TTNN_POINTWISE_BINARY_OPS = [
-    ttnn.add,
-    ttnn.atan2,
-    ttnn.div,
-    ttnn.eqz,
-    ttnn.floor_div,
-    ttnn.gez,
-    ttnn.ge,
-    ttnn.gtz,
-    ttnn.isclose,
-    ttnn.ldexp,
-    ttnn.lez,
-    ttnn.logaddexp,
-    ttnn.logaddexp2,
-    ttnn.le,
-    ttnn.ltz,
-    ttnn.nextafter,
-    ttnn.nez,
-    ttnn.polyval,
-    ttnn.squared_difference,
-    ttnn.eq,
-    ttnn.gt,
-    ttnn.logical_and,
-    ttnn.logical_or,
-    ttnn.logical_xor,
-    ttnn.lt,
-    ttnn.maximum,
-    ttnn.minimum,
-    ttnn.mul,
-    ttnn.ne,
-    ttnn.pow,
-    ttnn.rsub,
-    ttnn.sub,
-    ttnn.xlogy,
-    # ttnn.add_and_apply_activation,  # ttnn has no add_and_apply_activation, remote the comment in the future when it has
-    # ttnn.add_and_apply_activation_,  # ttnn has no add_and_apply_activation, remote the comment in the future when it has
-]
+def get_pointwise_trinary_ops():
+    import torch_ttnn as ttnn
+    return [
+        ttnn.addcdiv,
+        ttnn.addcmul,
+        ttnn.mac,
+        ttnn.where,
+    ]
 
-TTNN_POINTWISE_TRINARY_OPS = [
-    ttnn.addcdiv,
-    ttnn.addcmul,
-    ttnn.mac,
-    ttnn.where,
-]
+def get_matrix_multiplication_ops():
+    import torch_ttnn as ttnn
+    return [
+        ttnn.matmul,
+        ttnn.linear,
+    ]
 
-TTNN_MATRIX_MULTIPLICATION_OPS = [
-    ttnn.matmul,
-    ttnn.linear,
-]
+def get_datamove_ops():
+    import torch_ttnn as ttnn
+    return [
+        ttnn.concat,
+        ttnn.pad,
+        ttnn.permute,
+        ttnn.reshape,
+        ttnn.experimental.view,
+        ttnn.sharded_to_interleaved,
+        ttnn.slice,
+        ttnn.split,
+        ttnn.squeeze,
+        ttnn.to_layout,
+        ttnn.transpose,
+        ttnn.unsqueeze,
+    ]
 
-TTNN_DATAMOVE_OPS = [
-    ttnn.concat,
-    ttnn.pad,
-    ttnn.permute,
-    ttnn.reshape,
-    ttnn.experimental.view,
-    ttnn.sharded_to_interleaved,
-    ttnn.slice,
-    ttnn.split,
-    ttnn.squeeze,
-    ttnn.to_layout,
-    ttnn.transpose,
-    ttnn.unsqueeze,
-]
+def get_target_wrappers():
+    from . import target_wrappers
+    return [
+        target_wrappers.clone,
+        target_wrappers.repeat,
+        target_wrappers.pack_to_tuple,
+        target_wrappers.move_to_host,
+        target_wrappers.conv,
+        target_wrappers.roll,
+        target_wrappers.stack,
+        target_wrappers.all,
+        target_wrappers.concat_tensor,
+        target_wrappers.native_layer_norm,
+    ]
 
-TTNN_TARGET_WRAPPERS = [
-    target_wrappers.clone,
-    target_wrappers.repeat,
-    target_wrappers.pack_to_tuple,
-    target_wrappers.move_to_host,
-    target_wrappers.conv,
-    target_wrappers.roll,
-    target_wrappers.stack,
-    target_wrappers.all,
-    target_wrappers.concat_tensor,
-    target_wrappers.native_layer_norm,
-]
+def get_norm_ops():
+    import torch_ttnn as ttnn
+    return [
+        ttnn.group_norm,
+    ]
 
-TTNN_NORM_OPS = [
-    ttnn.group_norm,
-]
+def get_pool_ops():
+    import torch_ttnn as ttnn
+    return [
+        ttnn.max_pool2d,
+        ttnn.avg_pool2d,
+    ]
 
-TTNN_POOL_OPS = [
-    ttnn.max_pool2d,
-    ttnn.avg_pool2d,
-]
-
-TTNN_ROW_LAYOUT_OPS = set(
-    [
+def get_row_layout_ops():
+    import torch_ttnn as ttnn
+    from . import target_wrappers
+    return set([
         ttnn.slice,
         target_wrappers.roll,
         ttnn.argmax,
-    ]
-)
+    ])
 
-# Operations that might output row major layouts based on ToTtPass implementation
-TTNN_MAYBE_ROW_OPS = set(
-    [
+def get_maybe_row_ops():
+    import torch_ttnn as ttnn
+    return set([
         ttnn.pad,
         ttnn.concat,
+    ])
+
+def get_transformer_ops():
+    import torch_ttnn as ttnn
+    return [
+        ttnn.transformer.scaled_dot_product_attention,
+        ttnn.transformer.attention_softmax,
+        ttnn.transformer.split_query_key_value_and_split_heads,
+        ttnn.transformer.concatenate_heads,
     ]
-)
 
-TTNN_TRANSFORMER_OPS = [
-    ttnn.transformer.scaled_dot_product_attention,
-    ttnn.transformer.attention_softmax,
-    ttnn.transformer.split_query_key_value_and_split_heads,
-    ttnn.transformer.concatenate_heads,
-]
-
-TTNN_HOST_ONLY_OPS = set()
-
+def get_host_only_ops():
+    return set()
 
 # For operations limitations
 # See https://github.com/tenstorrent-metal/tt-metal/blob/main/ttnn/README.md?plain=1#L19
@@ -207,15 +222,15 @@ def is_tt_compute(node) -> bool:
         return is_tt_compute(node.args[0])
 
     return node.target in set(
-        TTNN_POINTWISE_UNARY_OPS
-        + TTNN_POINTWISE_BINARY_OPS
-        + TTNN_POINTWISE_TRINARY_OPS
-        + TTNN_MATRIX_MULTIPLICATION_OPS
-        + TTNN_TARGET_WRAPPERS
-        + TTNN_DATAMOVE_OPS
-        + TTNN_NORM_OPS
-        + TTNN_POOL_OPS
-        + TTNN_TRANSFORMER_OPS
+        get_pointwise_unary_ops()
+        + get_pointwise_binary_ops()
+        + get_pointwise_trinary_ops()
+        + get_matrix_multiplication_ops()
+        + get_target_wrappers()
+        + get_datamove_ops()
+        + get_norm_ops()
+        + get_pool_ops()
+        + get_transformer_ops()
         + [
             ttnn.embedding,
             ttnn.ones,
@@ -330,13 +345,13 @@ class NodeInputAligner:
             spec.layout = TtnnTileLayout
 
         # legalize to the default layout and device
-        if input_node.target in TTNN_ROW_LAYOUT_OPS:
+        if input_node.target in get_row_layout_ops():
             spec.layout = TtnnTileLayout
-        if input_node.target in TTNN_MAYBE_ROW_OPS:
+        if input_node.target in get_maybe_row_ops():
             # for now, convert to tile (might be nop)
             # TODO: only insert to_layout call if needed
             spec.layout = TtnnTileLayout
-        if input_node.target in TTNN_HOST_ONLY_OPS:
+        if input_node.target in get_host_only_ops():
             spec.device = TtnnDevice
 
         return spec

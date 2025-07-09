@@ -5,7 +5,7 @@ import torch
 import torch_ttnn
 import pytest
 import pickle
-import ttnn
+import torch_ttnn as ttnn
 from pathlib import Path
 from tests.utils import calculate_accuracy, render_metric_string_list_to_input_args_kwargs
 

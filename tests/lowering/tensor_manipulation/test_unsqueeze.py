@@ -4,7 +4,7 @@
 import torch
 import torch_ttnn
 import pytest
-import ttnn
+import torch_ttnn as ttnn
 
 
 # RuntimeError: TT_THROW @ ../ttnn/cpp/ttnn/operations/core.hpp:81: tt::exception

@@ -20,7 +20,9 @@ import subprocess
 import sys
 import logging
 
-import tools.export_code as export_code
+from torch_ttnn import export_code
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 mb_in_bytes = 1048576
 

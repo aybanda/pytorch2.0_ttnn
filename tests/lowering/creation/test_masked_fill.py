@@ -4,7 +4,7 @@
 import torch
 import torch_ttnn
 import pytest
-import ttnn
+import torch_ttnn as ttnn
 
 
 def _test_masked_fill_common(device, module, input_shape, mask_shape, fill_value):
