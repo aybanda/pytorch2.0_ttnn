@@ -222,3 +222,6 @@ cython_debug/
 *.out
 *.app
 
+# Ignore Specstory session logs and metadata
+.specstory/
+

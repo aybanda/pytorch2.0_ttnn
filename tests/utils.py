@@ -72,6 +72,8 @@ class ModelTester:
             return model(prompt=inputs)
         if isinstance(inputs, (list, tuple)):
             return model(*inputs)
+        if isinstance(inputs, dict):
+            return model(**inputs)
         return model(inputs)
 
     def append_fake_loss_function(self, outputs):
