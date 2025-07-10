@@ -6,5 +6,9 @@ RUN apt-get update && \
         libgl1-mesa-glx \
         git-lfs \
         libsndfile1 \
-        docker.io && \
+        docker.io \
+        python3 \
+        python3-pip && \
     rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m pip install --upgrade pip
