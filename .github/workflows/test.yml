@@ -1,0 +1,25 @@
+name: CI - Stable Diffusion 1.4 Test
+
+on:
+  push:
+    branches: [ stable-diffusion-1-4 ]
+  pull_request:
+    branches: [ stable-diffusion-1-4 ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Stable Diffusion 1.4 test
+        run: |
+          pytest tests/models/stable_diffusion/test_stable_diffusion_1_4.py -v -s 
