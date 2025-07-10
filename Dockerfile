@@ -16,4 +16,4 @@ RUN python3 -m pip install --upgrade pip
 COPY . /app
 WORKDIR /app
 
-CMD ["pytest", "tests/models/stable_diffusion/test_stable_diffusion_1_4.py", "--tb=short", "-v", "-s"]
+CMD ["echo", "Container started successfully! If you see this, logging works."]
