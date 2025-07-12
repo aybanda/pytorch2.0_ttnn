@@ -19,7 +19,7 @@ except ImportError as e:
 def test_ttmetal_stable_diffusion_performance():
     print("[TT-METAL SD1.4 PERF] Starting performance test...")
     # Initialize the actual TTNN device object
-    device = ttnn.open_device(0)  # Use device 0; change index if needed
+    device = ttnn.open_device(device_id=0)  # Use device 0; change index if needed
     reset_seeds = True
     input_path = None  # The demo loads prompts internally if None
     num_prompts = 1
