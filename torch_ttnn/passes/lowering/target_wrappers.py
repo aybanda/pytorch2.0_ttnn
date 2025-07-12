@@ -339,18 +339,18 @@ def concat_tensor(tensor, dim, num_devices):
 # TODO: Support compute kernel config
 @torch.fx.wrap
 def native_layer_norm(
-    input_tensor: ttnn.Tensor,
+    input_tensor: "ttnn.Tensor",
     in_tensor_shape: torch.Size,
     mean_rstd_shape: torch.Size,
     ttnn_mean_rstd_shape: torch.Size,
-    ttnn_dtype: ttnn.DataType,
+    ttnn_dtype: "ttnn.DataType",
     norm_dims: int,
-    gamma: ttnn.Tensor,
-    beta: ttnn.Tensor,
-    epsilon: ttnn.Tensor,
+    gamma: "ttnn.Tensor",
+    beta: "ttnn.Tensor",
+    epsilon: "ttnn.Tensor",
     use_mean: bool,
     use_rstd: bool,
-    device: ttnn.Device,
+    device: "ttnn.Device",
 ):
     if not use_mean and not use_rstd:
         output = ttnn.layer_norm(input_tensor, epsilon=epsilon, weight=gamma, bias=beta)
