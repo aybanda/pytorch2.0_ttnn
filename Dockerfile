@@ -43,7 +43,7 @@ RUN pip install --upgrade pip
 RUN pip install torch==2.2.1 torchvision==0.17.1 --index-url https://download.pytorch.org/whl/cu118
 
 # Install TTNN (Tenstorrent Neural Network)
-RUN pip install ttnn @ https://github.com/tenstorrent/tt-metal/releases/download/v0.59.0-rc56/ttnn-0.59.0rc56-cp310-cp310-manylinux_2_34_x86_64.whl
+RUN pip install https://github.com/tenstorrent/tt-metal/releases/download/v0.59.0-rc56/ttnn-0.59.0rc56-cp310-cp310-manylinux_2_34_x86_64.whl
 
 # Install other dependencies
 RUN pip install diffusers==0.32.2 transformers==4.38.0 huggingface_hub[cli] psutil
