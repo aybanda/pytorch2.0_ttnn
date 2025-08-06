@@ -1,0 +1,79 @@
+# Docker ignore file for Stable Diffusion 3.5 Medium testing
+# Exclude unnecessary files to speed up Docker build
+
+# Git and version control
+.git/
+.gitignore
+.gitmodules
+
+# Python cache and virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+ENV/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+test.log
+test_fixture.log
+
+# Documentation and spec files
+.specstory/
+docs/
+*.md
+!README.md
+!KOYEB_TESTING_README.md
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# Metrics and data files
+metrics/
+metrics-autogen-op/
+estimated-ronica-pytorch2-0-ttnn_2025-07-09T20_19_45.564Z.txt
+
+# External dependencies
+external/
+
+# Docker files (except the one we're using)
+Dockerfile*
+!Dockerfile.sd35
+.dockerignore
+
+# Large files that aren't needed for testing
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.avi
+*.mov
+
+# Test outputs (will be generated during runtime)
+sd35_*.png
+*.pickle 

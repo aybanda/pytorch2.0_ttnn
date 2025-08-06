@@ -1,0 +1,99 @@
+# Dockerfile for Stable Diffusion 3.5 Medium Testing on Koyeb
+# Issue #1042: Add model: Stable Diffusion 3.5 medium (512x512)
+
+FROM ubuntu:22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHON_VERSION=3.10
+ENV CUDA_VERSION=11.8
+ENV PYTHONUNBUFFERED=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3.10 \
+    python3.10-dev \
+    python3-pip \
+    python3-venv \
+    git \
+    wget \
+    curl \
+    build-essential \
+    software-properties-common \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create symbolic links for python
+RUN ln -sf /usr/bin/python3.10 /usr/bin/python3 && \
+    ln -sf /usr/bin/python3.10 /usr/bin/python
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt requirements-dev.txt ./
+
+# Create virtual environment
+RUN python3 -m venv venv
+ENV PATH="/app/venv/bin:$PATH"
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install PyTorch with CUDA support
+RUN pip install torch==2.2.1 torchvision==0.17.1 --index-url https://download.pytorch.org/whl/cu118
+
+# Install TTNN (Tenstorrent Neural Network)
+RUN pip install ttnn @ https://github.com/tenstorrent/tt-metal/releases/download/v0.59.0-rc56/ttnn-0.59.0rc56-cp310-cp310-manylinux_2_34_x86_64.whl
+
+# Install other dependencies
+RUN pip install diffusers==0.32.2 transformers==4.38.0 huggingface_hub[cli] psutil
+
+# Copy the entire project
+COPY . .
+
+# Install the pytorch2.0_ttnn package
+RUN pip install -e .
+
+# Make test scripts executable
+RUN chmod +x deploy_koyeb_sd35.sh
+
+# Create a startup script
+RUN echo '#!/bin/bash\n\
+echo "🚀 Starting Stable Diffusion 3.5 Medium Test"\n\
+echo "Issue #1042: Add model: Stable Diffusion 3.5 medium (512x512)"\n\
+echo "============================================================"\n\
+\n\
+# Activate virtual environment\n\
+source venv/bin/activate\n\
+\n\
+# Check Tenstorrent hardware\n\
+echo "🔍 Checking Tenstorrent hardware..."\n\
+if command -v tt-smi &> /dev/null; then\n\
+    echo "✅ tt-smi found, checking hardware status..."\n\
+    tt-smi\n\
+else\n\
+    echo "⚠️ tt-smi not found, checking for Tenstorrent devices..."\n\
+    ls /dev/tenstorrent* 2>/dev/null || echo "No Tenstorrent devices found"\n\
+fi\n\
+\n\
+# Run the test\n\
+echo "🎬 Running Stable Diffusion 3.5 Medium test..."\n\
+echo "Target FPS: 0.3"\n\
+echo "Current baseline: 0.06 FPS"\n\
+echo "============================================================"\n\
+\n\
+python3 test_sd35_ttnn.py\n\
+\n\
+echo "🏁 Test completed!"\n\
+echo "📊 Check the output above for performance results"\n\
+echo "📋 Report results back to GitHub issue #1042"\n\
+\n\
+# Keep container running for log access\n\
+sleep 3600\n\
+' > /app/start.sh && chmod +x /app/start.sh
+
+# Expose port (for web interface if needed)
+EXPOSE 8080
+
+# Set the startup script as entrypoint
+ENTRYPOINT ["/app/start.sh"] 
