@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Simple test script to verify environment setup and test Stable Diffusion 3.5 Medium
+Stable Diffusion 3.5 Medium Performance Test
 Focused on GitHub Issue #1042: Add model: Stable Diffusion 3.5 medium (512x512)
 Target: 0.3 FPS on batch 1
 Current baseline: 0.06 FPS on batch 1
+
+This script tests ONLY the Stable Diffusion model without TTNN dependencies.
 """
 
 import sys
@@ -18,7 +20,7 @@ def get_memory_usage():
     return process.memory_info().rss / 1024 / 1024
 
 def main():
-    print("🔍 Environment Test Starting...")
+    print("🎬 Stable Diffusion 3.5 Medium Performance Test")
     print("Issue #1042: Add model: Stable Diffusion 3.5 medium (512x512)")
     print("Target: 0.3 FPS on batch 1")
     print("Current baseline: 0.06 FPS on batch 1")
@@ -34,28 +36,7 @@ def main():
         print(f"🔥 CUDA version: {torch.version.cuda}")
         print(f"🔥 GPU count: {torch.cuda.device_count()}")
     
-    # Check TTNN (but don't fail if it's not available)
-    ttnn_available = False
-    try:
-        import torch_ttnn as ttnn
-        print("✅ torch_ttnn imported successfully")
-        ttnn_available = True
-        
-        # Check TTNN devices
-        try:
-            devices = ttnn.get_devices()
-            print(f"🔍 Found {len(devices)} TTNN device(s)")
-            for i, device in enumerate(devices):
-                print(f"   Device {i}: {device}")
-        except Exception as e:
-            print(f"⚠️ TTNN device detection failed: {e}")
-            
-    except ImportError as e:
-        print(f"⚠️ torch_ttnn import failed: {e}")
-    except Exception as e:
-        print(f"⚠️ TTNN error: {e}")
-    
-    # Check diffusers
+    # Check required packages
     try:
         import diffusers
         print(f"✅ diffusers version: {diffusers.__version__}")
@@ -63,7 +44,6 @@ def main():
         print(f"❌ diffusers import failed: {e}")
         return 1
     
-    # Check transformers
     try:
         import transformers
         print(f"✅ transformers version: {transformers.__version__}")
@@ -71,7 +51,6 @@ def main():
         print(f"❌ transformers import failed: {e}")
         return 1
     
-    # Check psutil
     try:
         import psutil
         print(f"✅ psutil version: {psutil.__version__}")
@@ -79,7 +58,7 @@ def main():
         print(f"❌ psutil import failed: {e}")
         return 1
     
-    print("\n🎯 Environment test completed!")
+    print("\n🎯 Environment check completed!")
     
     # Test Stable Diffusion 3.5 Medium performance
     try:
@@ -153,7 +132,7 @@ def main():
             image.save("sd35_test_output.png")
             print("💾 Sample image saved as sd35_test_output.png")
         
-        print("\n✅ Basic inference test passed!")
+        print("\n✅ Stable Diffusion 3.5 Medium test completed!")
         
     except Exception as e:
         print(f"❌ Model test failed: {e}")
