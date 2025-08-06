@@ -56,5 +56,5 @@ COPY . .
 # Make test scripts executable
 RUN chmod +x deploy_koyeb_sd35.sh
 
-# Set the Tenstorrent implementation test script as the entrypoint (worker mode - runs once and exits)
-ENTRYPOINT ["python3", "test_sd35_tenstorrent_implementation.py"] 
+# Set the final working test script as the entrypoint (worker mode - runs once and exits)
+ENTRYPOINT ["python3", "test_sd35_final_working.py"] 
