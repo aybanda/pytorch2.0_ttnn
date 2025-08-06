@@ -48,7 +48,7 @@ RUN pip install --upgrade pip
 RUN pip install torch==2.2.1 torchvision==0.17.1 --index-url https://download.pytorch.org/whl/cu118
 
 # Install other dependencies (TTNN will be handled by the test script)
-RUN pip install diffusers==0.32.2 transformers==4.38.0 huggingface_hub[cli] psutil
+RUN pip install diffusers==0.32.2 transformers==4.38.0 huggingface_hub[cli] psutil accelerate "numpy<2"
 
 # Copy the entire project
 COPY . .
@@ -56,5 +56,5 @@ COPY . .
 # Make test scripts executable
 RUN chmod +x deploy_koyeb_sd35.sh
 
-# Set the final test script as the entrypoint (worker mode - runs once and exits)
-ENTRYPOINT ["python3", "test_sd35_final.py"] 
+# Set the Tenstorrent implementation test script as the entrypoint (worker mode - runs once and exits)
+ENTRYPOINT ["python3", "test_sd35_tenstorrent_implementation.py"] 
