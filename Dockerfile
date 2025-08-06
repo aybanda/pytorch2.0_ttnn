@@ -20,7 +20,12 @@ RUN apt-get update && apt-get install -y \
     curl \
     build-essential \
     software-properties-common \
+    ca-certificates \
+    gnupg \
+    lsb-release \
     && rm -rf /var/lib/apt/lists/*
+
+# Note: SFPI should be pre-installed on Tenstorrent hardware instances
 
 # Create symbolic links for python
 RUN ln -sf /usr/bin/python3.10 /usr/bin/python3 && \
@@ -54,5 +59,5 @@ COPY . .
 # Make test scripts executable
 RUN chmod +x deploy_koyeb_sd35.sh
 
-# Set the Tenstorrent test script as the entrypoint (worker mode - runs once and exits)
-ENTRYPOINT ["python3", "test_sd35_tenstorrent.py"] 
+# Set the graceful test script as the entrypoint (worker mode - runs once and exits)
+ENTRYPOINT ["python3", "test_sd35_graceful.py"] 
