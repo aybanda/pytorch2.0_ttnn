@@ -47,10 +47,7 @@ RUN pip install --upgrade pip
 # Install PyTorch with CUDA support
 RUN pip install torch==2.2.1 torchvision==0.17.1 --index-url https://download.pytorch.org/whl/cu118
 
-# Install TTNN (Tenstorrent Neural Network)
-RUN pip install https://github.com/tenstorrent/tt-metal/releases/download/v0.59.0-rc56/ttnn-0.59.0rc56-cp310-cp310-manylinux_2_34_x86_64.whl
-
-# Install other dependencies
+# Install other dependencies (TTNN will be handled by the test script)
 RUN pip install diffusers==0.32.2 transformers==4.38.0 huggingface_hub[cli] psutil
 
 # Copy the entire project
@@ -59,5 +56,5 @@ COPY . .
 # Make test scripts executable
 RUN chmod +x deploy_koyeb_sd35.sh
 
-# Set the graceful test script as the entrypoint (worker mode - runs once and exits)
-ENTRYPOINT ["python3", "test_sd35_graceful.py"] 
+# Set the final test script as the entrypoint (worker mode - runs once and exits)
+ENTRYPOINT ["python3", "test_sd35_final.py"] 
