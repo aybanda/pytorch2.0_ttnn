@@ -51,11 +51,8 @@ RUN pip install diffusers==0.32.2 transformers==4.38.0 huggingface_hub[cli] psut
 # Copy the entire project
 COPY . .
 
-# Install the pytorch2.0_ttnn package
-RUN pip install -e .
-
 # Make test scripts executable
 RUN chmod +x deploy_koyeb_sd35.sh
 
-# Set the test script as the entrypoint (worker mode - runs once and exits)
-ENTRYPOINT ["python3", "test_sd35_ttnn.py"] 
+# Set the simple test script as the entrypoint (worker mode - runs once and exits)
+ENTRYPOINT ["python3", "test_simple.py"] 
